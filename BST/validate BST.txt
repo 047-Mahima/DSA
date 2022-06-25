@@ -1,0 +1,26 @@
+class Solution {
+public:
+    
+     bool isGreater(TreeNode* root, int value)
+    {
+        if(root == NULL) return true;
+        if(root->val > value && isGreater(root->left, value) && isGreater(root->right, value))
+            return true;
+        return false;  
+    }
+    bool isLesser(TreeNode* root, int value)
+    {
+        if(root == NULL) return true;
+        if(root->val < value && isLesser(root->left, value) && isLesser(root->right, value))
+            return true;
+        return false;  
+    }
+    bool isValidBST(TreeNode* root) { 
+        if(root == NULL) return true;
+        
+        return (isLesser(root->left, root->val)
+               &&isGreater(root->right, root->val)
+               &&isValidBST(root->left)
+               &&isValidBST(root->right));
+    }
+};
