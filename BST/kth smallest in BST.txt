@@ -1,0 +1,44 @@
+class Solution {
+public:
+     int morrisTraversal(TreeNode* root, int k)
+    {
+        int count = k;
+        TreeNode* temp = root;
+         
+        int ans;
+        while(temp)
+        {
+            
+            if(temp->left == NULL)
+            {
+               count--;
+               if(count == 0) ans = temp->val;
+                temp = temp->right;
+            }
+            else
+            {
+                TreeNode* prev = temp->left;
+                while( prev->right && prev->right != temp)
+                    prev = prev->right;
+                
+                if( prev->right == NULL)
+                {
+                    prev->right = temp;
+                    temp = temp->left;
+                }
+                else
+                {
+                    count--;
+                    if(count == 0) ans = temp->val;
+                    prev->right = NULL;
+                    temp = temp->right;
+                }
+            }
+        }
+        return ans;
+    }
+  
+    int kthSmallest(TreeNode* root, int k) {
+       return morrisTraversal(root, k);
+    }
+};

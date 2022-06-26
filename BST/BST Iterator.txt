@@ -1,0 +1,49 @@
+class BSTIterator {
+public:
+    TreeNode* temp;
+    BSTIterator(TreeNode* root) {
+        temp = root;
+    }
+    
+    int morrisTraversal()
+    {
+        int ans;
+        while( temp)
+        {
+            if(temp->left == NULL)
+            {
+                ans = temp->val;
+                temp = temp->right;
+                break;
+            }
+            else
+            {
+                TreeNode* prev = temp->left;
+                while( prev->right && prev->right != temp)
+                    prev = prev->right;
+                
+                if( prev->right == NULL)
+                {
+                    prev->right = temp;
+                    temp = temp->left;
+                }
+                else
+                {
+                    prev->right = NULL;
+                    ans = temp->val;
+                    temp = temp->right;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+    
+    int next() {
+        return morrisTraversal();
+    }
+    
+    bool hasNext() {
+        return temp != NULL;
+    }
+};
